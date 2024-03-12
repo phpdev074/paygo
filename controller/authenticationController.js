@@ -100,26 +100,29 @@ export const signUp = async (req, res) => {
                     }
                     else
                     {
-
+                        handleError(res,"Signup failed",statusCode?.BAD_REQUEST)
                     }
                   }
                   else
                   {
-
+                    handleFail(res,"some thing went wrong while creating the identification",statusCode?.BAD_REQUEST)
                   }
               }
               else
               {
-
+                handleFail(res,"somethingwent wrong while creating  address",statusCode?.BAD_REQUEST)
               }
          }
           else
-          {}
+          {
+            handleError(res,'something gone wrong while entering user data',statusCode?.BAD_REQUEST)
+          }
     }
     else{
 
     }
   } catch (error) {
     console.log(error.message)
+    handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
   }
 };

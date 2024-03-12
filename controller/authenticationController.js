@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import user from "../models/User.js";
+import user from "../models/user.js";
 import identificationSchema from "../models/identificationSchema.js";
 import familyMember from "../models/familyMember.js";
 import addressSchema from "../models/addressSchema.js";

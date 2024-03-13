@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import user from "../models/user.js";
-
-
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { v4 as uuidv4 } from "uuid";
+import { s3Client } from "../Helpers/AwsConfig.js";
 import identificationSchema from "../models/identificationSchema.js";
 import familyMember from "../models/familyMember.js";
 import addressSchema from "../models/addressSchema.js";
@@ -59,7 +60,7 @@ export const signUp = async (req, res) => {
           const newNewFamilyMemberData = await familyMember.create(newFamilyMember)
           if(newNewFamilyMemberData)
           {
-            const { address, country, countryAddress, region, zone, city, subCity, woreda, houseNumber, landlineNumber } = req.body;
+            const { country, currentAddress, region, zone, city, subCity, woreda, houseNumber, landlineNumber } = req.body;
             const newAddress ={
                 address,
                 country,
@@ -124,5 +125,37 @@ export const signUp = async (req, res) => {
   } catch (error) {
     console.log(error.message)
     handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+  }
+};
+
+export const uploadImage = async (req, res) => {
+  try {
+    if (!req.files || !req.files.image) {
+      return res.status(400).json({ error: "No image provided" });
+    }
+
+    const image = req.files.image;
+    console.log("=====>>>imagename",image)
+    const imageName = `${uuidv4()}_${image.name}`;
+    const bucketParams = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: imageName,
+      Body: image.data,
+      ContentType: image.mimetype,
+    };
+    console.log("=====>>>>>>>",bucketParams)
+    const uploadCommand = new PutObjectCommand(bucketParams);
+    const data = await s3Client.send(uploadCommand);
+
+    const accessibleUrl = `https://${bucketParams.Bucket}.s3.${process.env.REGION}.amazonaws.com/${imageName}`;
+
+    return res.status(statusCode?.OK).json({
+      status: statusCode?.OK,
+      message: "Image uploaded successfully",
+      filename: accessibleUrl,
+    });
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    return res.status(500).json({ error: "Failed to upload image" });
   }
 };

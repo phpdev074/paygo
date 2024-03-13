@@ -7,15 +7,20 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.490.0",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/s3-request-presigner": "^3.490.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "express": "~4.16.1",
+    "express-fileupload": "^1.4.3",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "mongoose": "^8.2.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

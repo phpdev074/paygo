@@ -5,11 +5,13 @@ import db from "./config/db.js";
 import express from 'express';
 import cookieParser from 'cookie-parser';   
 import logger from 'morgan';
+import fileUpload from 'express-fileupload';
 import authenticationRouter from "./routes/index.js";
 import usersRouter from './routes/users.js';
 const app = express();
 app.use("/images",express.static("uploads"))
 app.use(logger('dev'));
+app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

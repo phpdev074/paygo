@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
       message: 'Invalid email format'
     }
   },
+  
   image:{
     type:String
   },

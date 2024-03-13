@@ -60,9 +60,8 @@ export const signUp = async (req, res) => {
           const newNewFamilyMemberData = await familyMember.create(newFamilyMember)
           if(newNewFamilyMemberData)
           {
-            const {address, country, currentAddress, region, zone, city, subCity, woreda, houseNumber, landlineNumber } = req.body;
+            const {country, currentAddress, region, zone, city, subCity, woreda, houseNumber, landlineNumber } = req.body;
             const newAddress ={
-                address,
                 country,
                 currentAddress,
                 region,

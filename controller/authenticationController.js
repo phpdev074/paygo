@@ -35,6 +35,7 @@ export const signUp = async (req, res) => {
       phoneNumber,
       countryCode,
       gender,
+      image,
       dateOfBirth,
       birthPlace,
       nationality,

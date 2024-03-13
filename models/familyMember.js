@@ -15,7 +15,7 @@ const familyMemberSchema = new mongoose.Schema({
   },
   maritalStatus: {
     type: String,
-    enum: ['single', 'married', 'Divorced'],
+    enum: ['single', 'married', 'divorced','Single','Married','Divorced','SINGLE','MARRIED','DIVORCED'],
   },
   fullNameOfSpouse: {
     type: String,

@@ -24,6 +24,9 @@ export const signUp = async (req, res) => {
       educationStatus,
       password,
     } = req.body;
+    if (!name || !email || !phoneNumber || !countryCode || !gender || !image || !dateOfBirth || !birthPlace || !nationality || !educationStatus || !password) {
+      return handleError(res, 'Missing required fields', statusCode?.BAD_REQUEST);
+    }
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const userRecord = {

@@ -5,7 +5,6 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
   currentAddress: {
     type: String,
   },

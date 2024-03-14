@@ -263,6 +263,7 @@ export const uploadImage = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
+    console.log(req.body)
     const { email, password } = req.body;
     console.log(email,password)
     const userd = await user.findOne({ email })

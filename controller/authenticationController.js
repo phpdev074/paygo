@@ -265,7 +265,7 @@ export const login = async (req, res) => {
   try {
     console.log(req.body)
     const { email, password } = req.body;
-    console.log(email,password)
+    console.log("======1>>>>>>",email,password)
     const userd = await user.findOne({ email })
     const loggedInUser = await user.findOne({email}).select("-password")
     if (!userd) {

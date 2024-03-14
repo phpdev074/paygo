@@ -4,10 +4,6 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { s3Client } from "../Helpers/AwsConfig.js";
-import identificationSchema from "../models/identificationSchema.js";
-import familyMember from "../models/familyMember.js";
-import addressSchema from "../models/addressSchema.js";
-import documentationSchema from "../models/documentationSchema.js";
 import userConstantMessages from "../constants/usersConstantMessage.js";
 import {
   handleSuccess,

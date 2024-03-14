@@ -289,9 +289,10 @@ export const login = async (req, res) => {
           { userId: userd._id, userEmail: userd.email },
           process.env.SECRET_KEY
         );
+
         handleSuccess(
           res,
-          { token: token },
+          { token: token,isVerifiedByAdmin:userd?.isVerified },
           "User login successful",
           statusCode?.OK
         );

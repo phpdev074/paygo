@@ -53,6 +53,77 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
+  country: {
+    type: String,
+    required: true,
+  },
+  currentAddress: {
+    type: String,
+  },
+  region: {
+    type: String,
+  },
+  zone: {
+    type: String,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  subCity: {
+    type: String,
+  },
+  woreda: {
+    type: String,
+  },
+  houseNumber: {
+    type: String,
+  },
+  landlineNumber: {
+    type: String,
+  },
+  facialPicture: {
+    type: String,
+    required: true,
+  },
+
+  identificationCard: {
+    type: String,
+    ref: 'Identification', 
+  },
+  fName: {
+    type: String,
+    required: true,
+  },
+  mName: {
+    type: String,
+  },
+  gFName: {
+    type: String,
+  },
+  gMName: {
+    type: String,
+  },
+  maritalStatus: {
+    type: String,
+    enum: ['single', 'married', 'divorced','Single','Married','Divorced','SINGLE','MARRIED','DIVORCED'],
+  },
+  fullNameOfSpouse: {
+    type: String,
+  },
+  totalFamilyNumber: {
+    type: Number,
+  },
+  totalMaleNumber: {
+    type: Number,
+  },
+  totalFemaleNumber: {
+    type: Number,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now, 
+  },
 });
 
 

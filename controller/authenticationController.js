@@ -20,14 +20,15 @@ export const checkUserEmail = async (req, res) => {
     const { email } = req.body;
     const checkUserEmail = await user.findOne({ email });
     if (checkUserEmail) {
-      handleError(res, "This Email is Exist", statusCode?.OK);
+      return res.status(statusCode.OK).json({ userExist: true, message: "This user already exists" });
     } else {
-      handleError(res, "This Email is not Exist", statusCode?.OK);
+      return res.status(statusCode.OK).json({ userExist: false, message: "This email does not exist" });
     }
   } catch (error) {
-    handleError(res, error.message, statusCode?.INTERNAL_SERVER_ERROR);
+    handleError(res, error.message, statusCode.INTERNAL_SERVER_ERROR);
   }
 };
+
 export const signUp = async (req, res) => {
   try {
     let userRecord = {};
@@ -208,25 +209,21 @@ export const signUp = async (req, res) => {
           identificationCard,
         };
         console.log("=====>>>here",userRecord)
-        const createUserData = await user.create(userRecord);
-        familyRecord.userId = createUserData?._id;
-        const createFamilyData = await familyMember.create(familyRecord);
-        newAddress.userId = createUserData?._id;
-        const addressData = await addressSchema.create(newAddress);
-        identificationCardData.userId = createUserData?._id;
-        const identificationData = await identificationSchema.create(
-          identificationCardData
-        );
-        documentData.userId = createUserData?._id;
-        const documentDatas = await documentationSchema.create(documentData);
+        const createUserData = await user.create(req.body);
+        // familyRecord.userId = createUserData?._id;
+        // const createFamilyData = await familyMember.create(familyRecord);
+        // newAddress.userId = createUserData?._id;
+        // const addressData = await addressSchema.create(newAddress);
+        // identificationCardData.userId = createUserData?._id;
+        // const identificationData = await identificationSchema.create(
+        //   identificationCardData
+        // );
+        // documentData.userId = createUserData?._id;
+        // const documentDatas = await documentationSchema.create(documentData);
         handleSuccess(
           res,
           {
-            createUserData,
-            createFamilyData,
-            addressData,
-            identificationData,
-            documentDatas,
+            createUserData
           },
           userConstantMessages?.USER_REGISTERED,
           statusCode?.OK

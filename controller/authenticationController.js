@@ -270,13 +270,19 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const userd = await user.findOne({ email });
-    console.log(password,userd.password)
-    if (!userd || !(await bcrypt.compare(password, userd.password))) {
-      handleError(res,"Invalid Email or password",statusCode?.BAD_REQUEST)
-      return res.status(statusCode?.UNAUTHORIZED).json({ success: false, error: 'Invalid Phone Number or password' });
+    if(!userd)
+    {
+      handleError(res,userConstantMessages?.USER_NOT_FOUND,statusCode?.BAD_REQUEST)
     }
-    const token = jwt.sign({ userId: userd._id, userEmail: userd.email}, process.env.SECRET_KEY);
-    handleSuccess(res,{token:token},'User login successful',statusCode?.OK)
+    else
+    {
+      if (!userd || !(await bcrypt.compare(password, userd?.password))) {
+        handleError(res,"Invalid Email or password",statusCode?.BAD_REQUEST)
+        return res.status(statusCode?.UNAUTHORIZED).json({ success: false, error: 'Invalid Phone Number or password' });
+      }
+      const token = jwt.sign({ userId: userd._id, userEmail: userd.email}, process.env.SECRET_KEY);
+      handleSuccess(res,{token:token},'User login successful',statusCode?.OK)
+    }
   } catch (err) {
     console.error(err);
     handleError(res,err.message,statusCode?.INTERNAL_SERVER_ERROR)

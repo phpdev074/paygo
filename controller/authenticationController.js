@@ -263,10 +263,10 @@ export const uploadImage = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body.email)
     const email = req.body.email
     const password = req.body.password
-    console.log("======1>>>>>>",email,password)
+    console.log(req.body.email,"======1>>>>>>",email,password)
     const userd = await user.findOne({ email })
     const loggedInUser = await user.findOne({email}).select("-password")
     if (!userd) {

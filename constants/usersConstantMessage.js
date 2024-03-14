@@ -2,7 +2,7 @@ const userConstantMessages = {
     EDIT_PROFILE_SUCCESS: "Your profile is updated successfully.",
     USER_NOT_FOUND: "User not found.",
     INVALID_CREDENTIALS: "Invalid credentials. Please try again.",
-    USER_REGISTERED: "User registered successfully.",
+    USER_REGISTERED: "User SignUp successfully.",
     LOGIN_SUCCESS: "Login successful.",
     LOGIN_FAILED: "Login failed. Invalid credentials.",
     ACCESS_DENIED: "Access denied. You do not have permission.",

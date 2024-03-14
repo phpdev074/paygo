@@ -265,7 +265,7 @@ export const login = async (req, res) => {
       return res.status(statusCode?.UNAUTHORIZED).json({ success: false, error: 'Invalid Phone Number or password' });
     }
     const token = jwt.sign({ userId: userd._id, userEmail: userd.email}, process.env.SECRET_KEY);
-    handleSuccess(res,{token},'User login successful',statusCode?.OK)
+    handleSuccess(res,token,'User login successful',statusCode?.OK)
   } catch (err) {
     console.error(err);
     handleError(res,err.message,statusCode?.INTERNAL_SERVER_ERROR)

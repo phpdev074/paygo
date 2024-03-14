@@ -263,9 +263,7 @@ export const uploadImage = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-    console.log(req.body)
-    const email = req.body.email
-    const password = req.body.password
+    const {email,password} = req.body
     console.log(req.body.email,"======1>>>>>>",email,password)
     const userd = await user.findOne({ email })
     const loggedInUser = await user.findOne({email}).select("-password")
@@ -297,3 +295,39 @@ export const login = async (req, res) => {
     handleError(res, err.message, statusCode?.INTERNAL_SERVER_ERROR);
   }
 };
+export const loginFromIos = async(req,res)=>{
+  try {
+    const obj = req.body
+    const innerString = Object.keys(obj)[0];
+    const innerObject = JSON.parse(innerString);
+    const { email, password } = innerObject;
+    const userd = await user.findOne({ email })
+    const loggedInUser = await user.findOne({email}).select("-password")
+    if (!userd) {
+      handleError(
+        res,
+        userConstantMessages?.USER_NOT_FOUND,
+        statusCode?.BAD_REQUEST
+      );
+    } else {
+      if (!userd || !(await bcrypt.compare(password, userd?.password))) {
+        handleError(res, "Invalid Email or password", statusCode?.BAD_REQUEST);
+      } else {
+        const token = jwt.sign(
+          { userId: userd._id, userEmail: userd.email },
+          process.env.SECRET_KEY
+        );
+
+        handleSuccess(
+          res,
+          { token: token,isVerifiedByAdmin:userd?.isVerified,loggedInUser },
+          "User login successful",
+          statusCode?.OK
+        );
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    handleError(res, err.message, statusCode?.INTERNAL_SERVER_ERROR);
+  }
+}

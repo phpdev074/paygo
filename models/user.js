@@ -18,8 +18,13 @@ const userSchema = new mongoose.Schema({
   image:{
     type:String
   },
+  isVerified:{
+    type:Boolean,
+    default:false,
+  },
   phoneNumber: {
     type: Number,
+    unique:true,
   },
   countryCode: {
     type: Number,
@@ -50,14 +55,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Hash password before saving the user
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10; // Adjust salt rounds as needed for security
-    const hashedPassword = await bcrypt.hash(this.password, saltRounds);
-    this.password = hashedPassword;
-  }
-  next();
-});
 
 export default mongoose.model('User', userSchema);

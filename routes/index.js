@@ -4,5 +4,5 @@ import { signUp,uploadImage,login,checkUserEmail } from '../controller/authentic
 authenticationRouter.post('/signup', signUp);
 authenticationRouter.post('/upload-image', uploadImage);
 authenticationRouter.post('/login', login);
-authenticationRouter.post('/login', checkUserEmail);
+authenticationRouter.post('/check-email', checkUserEmail);
 export default authenticationRouter;

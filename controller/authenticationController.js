@@ -24,7 +24,6 @@ export const checkUserEmail = async (req, res) => {
     handleError(res, error.message, statusCode.INTERNAL_SERVER_ERROR);
   }
 };
-
 export const signUp = async (req, res) => {
   try {
     let userRecord = {};
@@ -204,7 +203,7 @@ export const signUp = async (req, res) => {
           facialPicture,
           identificationCard,
         };
-        console.log("=====>>>here",userRecord)
+        const userData = req.body        
         const createUserData = await user.create(req.body);
         // familyRecord.userId = createUserData?._id;
         // const createFamilyData = await familyMember.create(familyRecord);
@@ -266,8 +265,8 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(email,password)
-    const userd = await user.findOne({ email });
-    console.log(userd);
+    const userd = await user.findOne({ email })
+    const loggedInUser = await user.findOne({email}).select("-password")
     if (!userd) {
       handleError(
         res,
@@ -285,7 +284,7 @@ export const login = async (req, res) => {
 
         handleSuccess(
           res,
-          { token: token,isVerifiedByAdmin:userd?.isVerified },
+          { token: token,isVerifiedByAdmin:userd?.isVerified,loggedInUser },
           "User login successful",
           statusCode?.OK
         );

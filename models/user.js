@@ -120,10 +120,6 @@ const userSchema = new mongoose.Schema({
   totalFemaleNumber: {
     type: Number,
   },
-  timestamp: {
-    type: Date,
-    default: Date.now, 
-  },
   typeOfIdentificationCard: {
     type: String,
     required: true,

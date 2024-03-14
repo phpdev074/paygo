@@ -15,6 +15,22 @@ import {
   handleError,
 } from "../responseHandler/response.js";
 import statusCode from "../constants/statusCode.js";
+export const checkUserEmail = async(req,res)=>{
+  try {
+        const {email} = req.body
+        const checkUserEmail = await user.findOne({email})
+        if(checkUserEmail)
+        {
+          handleError(res,"This Email is Exist",statusCode?.OK)
+        }
+        else
+        {
+          handleError(res,"This Email is not Exist",statusCode?.OK)
+        }
+  } catch (error) {
+    handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)   
+  }
+}
 export const signUp = async (req, res) => {
   try {
     let userRecord = {};

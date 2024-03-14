@@ -263,7 +263,7 @@ export const uploadImage = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-    console.log(req.body.email)
+    console.log(req.body)
     const email = req.body.email
     const password = req.body.password
     console.log(req.body.email,"======1>>>>>>",email,password)

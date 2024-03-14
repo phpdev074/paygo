@@ -116,12 +116,7 @@ export const signUp = async (req, res) => {
         .findOne({ email })
         .select("-password");
       if (fildExistingUserData) {
-        handleSuccess(
-          res,
-          fildExistingUserData,
-          "You already Signed in",
-          statusCode?.OK
-        );
+        handleError(res,userConstantMessages?.EMAIL_ALREADY_EXIST,statusCode?.BAD_REQUEST)
       } else {
         familyRecord = {
           fName,

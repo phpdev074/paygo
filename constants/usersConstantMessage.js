@@ -1,4 +1,5 @@
 const userConstantMessages = {
+  EMAIL_ALREADY_EXIST:"Email already exist",
     EDIT_PROFILE_SUCCESS: "Your profile is updated successfully.",
     USER_NOT_FOUND: "User not found.",
     INVALID_CREDENTIALS: "Invalid credentials. Please try again.",

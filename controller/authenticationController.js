@@ -205,16 +205,6 @@ export const signUp = async (req, res) => {
         };
         const userData = req.body        
         const createUserData = await user.create(req.body);
-        // familyRecord.userId = createUserData?._id;
-        // const createFamilyData = await familyMember.create(familyRecord);
-        // newAddress.userId = createUserData?._id;
-        // const addressData = await addressSchema.create(newAddress);
-        // identificationCardData.userId = createUserData?._id;
-        // const identificationData = await identificationSchema.create(
-        //   identificationCardData
-        // );
-        // documentData.userId = createUserData?._id;
-        // const documentDatas = await documentationSchema.create(documentData);
         handleSuccess(
           res,
           {
@@ -264,7 +254,6 @@ export const uploadImage = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const {email,phoneNumber,password} = req.body
-    console.log(req.body.email,"======1>>>>>>",email,password)
     const userd = await user.findOne({$or: [{ email }, { phoneNumber }] })
     if(userd?.isVerified == true)
     {
@@ -293,8 +282,12 @@ export const login = async (req, res) => {
         }
       }
     }
-    else{
+    else if(userd?.isVerified == false){
       handleSuccess(res,userd,"Admin is not verified",statusCode?.OK)
+    }
+    else
+    {
+      handleFail(res,"User not found",statusCode?.OK)
     }
    
   } catch (err) {

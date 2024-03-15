@@ -291,13 +291,14 @@ export const login = async (req, res) => {
       }
     }
   } catch (err) {
-    console.error(err);
+    console.error(err);``
     handleError(res, err.message, statusCode?.INTERNAL_SERVER_ERROR);
   }
 };
 export const loginFromIos = async(req,res)=>{
   try {
     const obj = req.body
+    console.log("========>>>>>>>>req.body",req.body)
     const innerString = Object.keys(obj)[0];
     const innerObject = JSON.parse(innerString);
     const { email, password } = innerObject;

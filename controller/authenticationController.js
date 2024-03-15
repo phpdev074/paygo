@@ -301,6 +301,7 @@ export const loginFromIos = async(req,res)=>{
     const innerString = Object.keys(obj)[0];
     const innerObject = JSON.parse(innerString);
     const { email, password } = innerObject;
+    console.log(email,password)
     const userd = await user.findOne({ email })
     const loggedInUser = await user.findOne({email}).select("-password")
     if (!userd) {

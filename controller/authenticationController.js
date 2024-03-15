@@ -294,7 +294,7 @@ export const login = async (req, res) => {
       }
     }
     else{
-      handleFail(res,"Admin is not verified",statusCode?.UNAUTHORIZED)
+      handleSuccess(res,userd,"Admin is not verified",statusCode?.UNAUTHORIZED)
     }
    
   } catch (err) {

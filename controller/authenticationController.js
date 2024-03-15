@@ -263,33 +263,40 @@ export const uploadImage = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-    const {email,password} = req.body
+    const {email,phoneNumber,password} = req.body
     console.log(req.body.email,"======1>>>>>>",email,password)
-    const userd = await user.findOne({ email })
-    const loggedInUser = await user.findOne({email}).select("-password")
-    if (!userd) {
-      handleError(
-        res,
-        userConstantMessages?.USER_NOT_FOUND,
-        statusCode?.BAD_REQUEST
-      );
-    } else {
-      if (!userd || !(await bcrypt.compare(password, userd?.password))) {
-        handleError(res, "Invalid Email or password", statusCode?.BAD_REQUEST);
-      } else {
-        const token = jwt.sign(
-          { userId: userd._id, userEmail: userd.email },
-          process.env.SECRET_KEY
-        );
-
-        handleSuccess(
+    const userd = await user.findOne({$or: [{ email }, { phoneNumber }] })
+    if(userd?.isVerified == true)
+    {
+      const loggedInUser = await user.findOne({ $or: [{ email }, { phoneNumber }] }).select("-password");
+      if (!userd) {
+        handleError(
           res,
-          { token: token,isVerifiedByAdmin:userd?.isVerified,loggedInUser },
-          "User login successful",
-          statusCode?.OK
+          userConstantMessages?.USER_NOT_FOUND,
+          statusCode?.BAD_REQUEST
         );
+      } else {
+        if (!userd || !(await bcrypt.compare(password, userd?.password))) {
+          handleError(res, "Invalid Email or password", statusCode?.BAD_REQUEST);
+        } else {
+          const token = jwt.sign(
+            { userId: userd._id, userEmail: userd.email },
+            process.env.SECRET_KEY
+          );
+  
+          handleSuccess(
+            res,
+            { token: token,isVerifiedByAdmin:userd?.isVerified,loggedInUser },
+            "User login successful",
+            statusCode?.OK
+          );
+        }
       }
     }
+    else{
+      handleFail(res,"Admin is not verified",statusCode?.UNAUTHORIZED)
+    }
+   
   } catch (err) {
     console.error(err);``
     handleError(res, err.message, statusCode?.INTERNAL_SERVER_ERROR);

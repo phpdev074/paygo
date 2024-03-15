@@ -25,6 +25,7 @@ const userConstantMessages = {
     EMPTY_DATA:"",
     FILED_TO_FETCH_USER_USER_DETAILS:"Failed to fetch user details",
     USER_UPDATED_SUCCESSFULLY:"User Updated Successfully.",
+    USER_UPDATED_FAIL:"User Updated Fail.",
     SOFT_USER_DELETED:"Your account is not longer exist.",
     SALT:10,
     FOLLOW_SUCCESS :"Follow Success",

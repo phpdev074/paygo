@@ -83,6 +83,7 @@ export const changePassword = async(req,res)=>{
 export const editUserProfile = async(req,res)=>{
     try {
             const userId = req.user
+            console.log(req.body)
             const userOId = new mongoose.Types.ObjectId(userId)
             const {
                 name,

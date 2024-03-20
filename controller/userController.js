@@ -1,8 +1,8 @@
+import mongoose from "mongoose";
 import user from "../models/user.js";
 import { handleError,handleFail,handleSuccess } from "../responseHandler/response.js";
 import statusCode from "../constants/statusCode.js";
 import userConstantMessages from "../constants/usersConstantMessage.js";
-import mongoose from "mongoose";
 export const getUserDetails = async(req,res)=>{
     try {
             const getAllUser = await user.find().sort({timestamp:-1});
@@ -40,7 +40,7 @@ export const userUpdateUserStatus = async(req,res)=>{
 }
 export const getUserProfile = async(req,res)=>{
     try {
-            const userId = req.query.id
+            const userId = req.user
             const userOId= new mongoose.Types.ObjectId(userId)
             const getUserProfile= await user.findOne({_id:userOId})
             if(getUserProfile) 

@@ -24,7 +24,6 @@ export const userUpdateUserStatus = async(req,res)=>{
             console.log(req.body)
             const {userId,isVerified} = req.body
             const userOId = new mongoose.Types.ObjectId(userId) 
-
             const updateUserStatus = await user.findOneAndUpdate({_id:userOId},{isVerified})
             if(updateUserStatus)
             {
@@ -55,9 +54,28 @@ export const getUserProfile = async(req,res)=>{
         handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }
+export const changePassword = async(req,res)=>{
+    try {
+        const userId = req.user
+        const userOId = new mongoose.Types.ObjectId(userId)
+        const userData = await user.findById({_id:userOId});
+        const {oldPassword,newPassword} = req.body
+        const checkPassword = await bcrypt.compare(oldPassword, userData?.password)
+        if(checkPassword)
+        {
+            let updatePassword = await user.findOneAndUpdate({_id:userOId},{password:newPassword})
+            handleSuccess(res,"","Password updated successFully",statusCode?.OK)
+        }
+        else
+        {
+            handleError(res,"Old Password is not correct",statusCode?.BAD_REQUEST)
+        }
+    } catch (error) {
+        handleError(res,error?.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}
 export const editUserProfile = async(req,res)=>{
     try {
-            console.log("======>>>>here")
             const userId = req.user
             const userOId = new mongoose.Types.ObjectId(userId)
             const {
@@ -97,7 +115,7 @@ export const editUserProfile = async(req,res)=>{
                 occupationalStatus,
                 incomeNature
               } = req.body;
-            const userData = await user.findById({_id:userOId});
+            const userData = await user.findById({_id:userOId}).select("-password");
             if (name) userData.name = name;
             if (email) userData.email = email;
             if (image) userData.image = image;

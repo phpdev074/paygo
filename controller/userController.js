@@ -60,8 +60,11 @@ export const changePassword = async(req,res)=>{
         const userId = req.user
         const userOId = new mongoose.Types.ObjectId(userId)
         const userData = await user.findById({_id:userOId});
+        console.log("=========>>>>",userData)
         const {oldPassword,newPassword} = req.body
+        console.log(oldPassword,newPassword)
         const checkPassword = await bcrypt.compare(oldPassword, userData?.password)
+        console.timeLog(checkPassword)
         if(checkPassword)
         {
             let updatePassword = await user.findOneAndUpdate({_id:userOId},{password:newPassword})

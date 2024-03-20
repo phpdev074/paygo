@@ -255,6 +255,7 @@ export const login = async (req, res) => {
   try {
     const {email,phoneNumber,password} = req.body
     const userData = await user.findOne({$or: [{ email }, { phoneNumber }] })
+    const userDataWithOutPassword = await user.findOne({$or: [{ email }, { phoneNumber }] }).select("-password")
     if(userData?.isVerified == true)
     {
       const loggedInUser = await user.findOne({ $or: [{ email }, { phoneNumber }] }).select("-password");
@@ -283,7 +284,7 @@ export const login = async (req, res) => {
       }
     }
     else if(userData?.isVerified == false){
-      handleSuccess(res,{ token: "",isVerifiedByAdmin:userData?.isVerified,loggedInUser },"Admin is not verified",statusCode?.OK)
+      handleSuccess(res,{ token: "",isVerifiedByAdmin:userData?.isVerified,userDataWithOutPassword },"Admin is not verified",statusCode?.OK)
     }
     else
     {
@@ -322,7 +323,7 @@ export const loginFromIos = async(req,res)=>{
 
         handleSuccess(
           res,
-          { token: token,isVerifiedByAdmin:userd?.isVerified,loggedInUser },
+          { token: token,isVerifiedByAdmin:userData?.isVerified,loggedInUser },
           "User login successful",
           statusCode?.OK
         );

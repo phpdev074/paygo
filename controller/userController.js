@@ -67,7 +67,8 @@ export const changePassword = async(req,res)=>{
         console.timeLog(checkPassword)
         if(checkPassword)
         {
-            let updatePassword = await user.findOneAndUpdate({_id:userOId},{password:newPassword})
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            let updatePassword = await user.findOneAndUpdate({_id:userOId},{password:hashedPassword})
             console.log("======>>>>",updatePassword)
             handleSuccess(res,"","Password updated successFully",statusCode?.OK)
         }

@@ -135,7 +135,7 @@ export const editUserProfile = async(req,res)=>{
             if (incomeNature) userData.incomeNature = incomeNature;
             await userData.save();
 
-            if(getuserDataProfile) 
+            if(userData) 
             {
                 handleSuccess(res, userData,"User profile updated SuccessFully",statusCode?.OK)
             }

@@ -57,6 +57,7 @@ export const getUserProfile = async(req,res)=>{
 }
 export const editUserProfile = async(req,res)=>{
     try {
+            console.log("======>>>>here")
             const userId = req.user
             const userOId = new mongoose.Types.ObjectId(userId)
             const {

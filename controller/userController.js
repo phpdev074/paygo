@@ -65,6 +65,7 @@ export const changePassword = async(req,res)=>{
         if(checkPassword)
         {
             let updatePassword = await user.findOneAndUpdate({_id:userOId},{password:newPassword})
+            console.log("======>>>>",updatePassword)
             handleSuccess(res,"","Password updated successFully",statusCode?.OK)
         }
         else

@@ -255,10 +255,9 @@ export const login = async (req, res) => {
   try {
     const {email,phoneNumber,password} = req.body
     const userData = await user.findOne({$or: [{ email }, { phoneNumber }] })
-    const loggedInUser = await user.findOne({$or: [{ email }, { phoneNumber }] }).select("-password")
+    let loggedInUser = await user.findOne({$or: [{ email }, { phoneNumber }] }).select("-password")
     if(userData?.isVerified == true)
     {
-      loggedInUser = await user.findOne({ $or: [{ email }, { phoneNumber }] }).select("-password");
       if (!userData) {
         handleError(
           res,

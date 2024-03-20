@@ -8,3 +8,4 @@ userRouter.get("/get-user-profile",verifyAuthToken,getUserProfile)
 userRouter.put("/edit-user-profile",verifyAuthToken,editUserProfile)
 userRouter.put("/change-password",verifyAuthToken,changePassword)
 export default userRouter;
+

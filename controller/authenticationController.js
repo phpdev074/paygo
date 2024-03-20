@@ -254,36 +254,36 @@ export const uploadImage = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const {email,phoneNumber,password} = req.body
-    const userd = await user.findOne({$or: [{ email }, { phoneNumber }] })
-    if(userd?.isVerified == true)
+    const userData = await user.findOne({$or: [{ email }, { phoneNumber }] })
+    if(userData?.isVerified == true)
     {
       const loggedInUser = await user.findOne({ $or: [{ email }, { phoneNumber }] }).select("-password");
-      if (!userd) {
+      if (!userData) {
         handleError(
           res,
           userConstantMessages?.USER_NOT_FOUND,
           statusCode?.BAD_REQUEST
         );
       } else {
-        if (!userd || !(await bcrypt.compare(password, userd?.password))) {
+        if (!userData || !(await bcrypt.compare(password, userData?.password))) {
           handleError(res, "Invalid Email or password", statusCode?.BAD_REQUEST);
         } else {
           const token = jwt.sign(
-            { userId: userd._id, userEmail: userd.email },
+            { userId: userData._id, userEmail: userData.email },
             process.env.SECRET_KEY
           );
   
           handleSuccess(
             res,
-            { token: token,isVerifiedByAdmin:userd?.isVerified,loggedInUser },
+            { token: token,isVerifiedByAdmin:userData?.isVerified,loggedInUser },
             "User login successful",
             statusCode?.OK
           );
         }
       }
     }
-    else if(userd?.isVerified == false){
-      handleSuccess(res,userd,"Admin is not verified",statusCode?.OK)
+    else if(userData?.isVerified == false){
+      handleSuccess(res,{ token: "",isVerifiedByAdmin:userData?.isVerified,loggedInUser },"Admin is not verified",statusCode?.OK)
     }
     else
     {
@@ -303,20 +303,20 @@ export const loginFromIos = async(req,res)=>{
     const innerObject = JSON.parse(innerString);
     const { email, password } = innerObject;
     console.log(email,password)
-    const userd = await user.findOne({ email })
+    const userData = await user.findOne({ email })
     const loggedInUser = await user.findOne({email}).select("-password")
-    if (!userd) {
+    if (!userData) {
       handleError(
         res,
         userConstantMessages?.USER_NOT_FOUND,
         statusCode?.BAD_REQUEST
       );
     } else {
-      if (!userd || !(await bcrypt.compare(password, userd?.password))) {
+      if (!userData || !(await bcrypt.compare(password, userData?.password))) {
         handleError(res, "Invalid Email or password", statusCode?.BAD_REQUEST);
       } else {
         const token = jwt.sign(
-          { userId: userd._id, userEmail: userd.email },
+          { userId: userData._id, userEmail: userData.email },
           process.env.SECRET_KEY
         );
 

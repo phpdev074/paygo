@@ -55,3 +55,21 @@ export const getUserProfile = async(req,res)=>{
         handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }
+export const editUserProfile = async(req,res)=>{
+    try {
+            const userId = req.user
+            const userOId= new mongoose.Types.ObjectId(userId)
+            const updates = req.body;
+            const user = await User.findByIdAndUpdate({_idu:userOId}, updates, { new: true });
+            if(getUserProfile) 
+            {
+                handleSuccess(res,getUserProfile,"User profile fetched SuccessFully",statusCode?.OK)
+            }
+            else
+            {
+                handleError(res,"User Profile fetch Failed",statusCode?.BAD_REQUEST)
+            }
+    } catch (error) {
+        handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}

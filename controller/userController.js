@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import user from "../models/user.js";
 import { handleError,handleFail,handleSuccess } from "../responseHandler/response.js";
 import statusCode from "../constants/statusCode.js";

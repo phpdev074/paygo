@@ -13,7 +13,7 @@ export const getUserDetails = async(req,res)=>{
             }
             else
             {
-                handleError(res,userConstantMessages?.BLOCKED_USERS_LIST_FETCH_FAIL,statusCode?.BAD_REQUEST)
+                handleError(res,userConstantMessages?.USER_DETAILS_FETCHED_FAIL,statusCode?.BAD_REQUEST)
             }
     } catch (error) {
         handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
@@ -36,5 +36,22 @@ export const userUpdateUserStatus = async(req,res)=>{
             }
     } catch (error) {
         handleFail(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}
+export const getUserProfile = async(req,res)=>{
+    try {
+            const userId = req.query.id
+            const userOId= new mongoose.Types.ObjectId(userId)
+            const getUserProfile= await user.findOne({_id:userOId})
+            if(getUserProfile) 
+            {
+                handleSuccess(res,getUserProfile,"User profile fetched SuccessFully",statusCode?.OK)
+            }
+            else
+            {
+                handleError(res,"User Profile fetch Failed",statusCode?.BAD_REQUEST)
+            }
+    } catch (error) {
+        handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }

@@ -4,6 +4,7 @@ import user from "../models/users.js";
 import { handleError,handleFail,handleSuccess } from "../responseHandler/response.js";
 import statusCode from "../constants/statusCode.js";
 import userConstantMessages from "../constants/usersConstantMessage.js";
+import ContactUs from "../models/contactUsSchema.js";
 export const getUserDetails = async(req,res)=>{
     try {
             const getAllUser = await user.find().sort({timestamp:-1});
@@ -206,5 +207,25 @@ export const deleteAccount  = async(req,res)=>{
 
     } catch (error) {
         handleFail(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}
+export const createContactUs = async(req,res)=>{
+    try {
+            let userId;
+            userId = req.user
+            let userOId = new mongoose.Types.ObjectId(userId)
+            const{title,email,description} = req.body
+            const createContact = await ContactUs.create({userId:userOId,title,email,description})
+            if(createContact)
+            {
+                handleSuccess(res,createContact,"We Will Contact You Soon",statusCode?.OK)
+            }
+            else
+            {
+                handleFail(res,"Contact us creating fail",statusCode?.BAD_REQUEST)
+            }
+
+    } catch (error) {
+        handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }

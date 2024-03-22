@@ -180,7 +180,7 @@ export const updateNotification = async(req,res)=>{
             const updateUserNotification = await user.findOneAndUpdate({_id:userOId},{notification})
             if(updateUserNotification)
             {
-                handleSuccess(res,updateUserNotification,"User Notification is updated successfully",statusCode?.BAD_REQUEST)
+                handleSuccess(res,updateUserNotification,"User Notification is updated successfully",statusCode?.OK)
             }
             else
             {

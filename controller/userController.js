@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import user from "../models/user.js";
+import user from "../models/users.js";
 import { handleError,handleFail,handleSuccess } from "../responseHandler/response.js";
 import statusCode from "../constants/statusCode.js";
 import userConstantMessages from "../constants/usersConstantMessage.js";
@@ -170,5 +170,41 @@ export const editUserProfile = async(req,res)=>{
             }
     } catch (error) {
         handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}
+export const updateNotification = async(req,res)=>{
+    try {
+            const userId = req.user
+            const userOId = new mongoose.Types.ObjectId(userId)
+            const {notification} = req.body
+            const updateUserNotification = await user.findOneAndUpdate({_id:userOId},{notification})
+            if(updateUserNotification)
+            {
+                handleSuccess(res,updateUserNotification,"User Notification is updated successfully",statusCode?.BAD_REQUEST)
+            }
+            else
+            {
+                handleFail(res,"User Notification updated failed",statusCode?.BAD_REQUEST)
+            }
+    } catch (error) {
+            handleFail(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}
+export const deleteAccount  = async(req,res)=>{
+    try {
+            const userId = req.user
+            const userOId = new mongoose.Types.ObjectId(userId)
+            const deleteUser = await user.findByIdAndDelete({_id:userOId})
+            if(deleteUser)
+            {
+                handleSuccess(res,deleteUser,"User Deleted SuccessFully",statusCode?.OK)
+            }
+            else
+            {
+                handleFail(res,"user Delted fail",statusCode?.BAD_REQUEST)
+            }
+
+    } catch (error) {
+        handleFail(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }

@@ -95,6 +95,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  notification:{
+    type:Boolean,
+    default:false
+  },
   mName: {
     type: String,
   },

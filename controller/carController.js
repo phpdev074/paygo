@@ -7,16 +7,16 @@ import {
     handleError,
   } from "../responseHandler/response.js";
   import statusCode from "../constants/statusCode.js";
-export const getCarName = async(req,res)=>{
+export const getBrandName = async(req,res)=>{
     try {
-            const getCarName = await CarName.find().populate("brandId")
+            const getCarName = await BrandName.find()
             if(getCarName)
             {
-                handleSuccess(res,getCarName,"Car Details Fetch Successfully",statusCode?.OK)
+                handleSuccess(res,getCarName,"Brand Details Fetch Successfully",statusCode?.OK)
             }
             else
             {
-                handleFail(res,"Car Details fetch fail",statusCode?.CREATED)
+                handleFail(res,"Brand Details fetch fail",statusCode?.CREATED)
             }
     } catch (error) {
         handleFail(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)

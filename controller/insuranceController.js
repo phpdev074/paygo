@@ -24,7 +24,7 @@ export const createInsuranceLoan = async(req,res)=>{
 }
 export const getInsuranceLoan = async(req,res)=>{
     try {
-            const insuranceLoanList = await InsuranceLoan.find().populate({path: "userId", options: { strictPopulate: false } }).sort({_id:-1})
+            const insuranceLoanList = await InsuranceLoan.find().sort({_id:-1})
             if(insuranceLoanList)
             {
                 console.log("====>>>>",insuranceLoanList)

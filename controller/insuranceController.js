@@ -8,7 +8,7 @@ export const createInsuranceLoan = async(req,res)=>{
             const userId = req.user
             const userOId = new mongoose.Types.ObjectId(userId)
             const {vehicleName,vehicleBrand,vehicleModel,color,licensePlateNo,vehicleYear,ownerId,agentPhoneNumber,agentCode,agentApp,fuelType,vehicleValue,carCondition,loanTerm,vehicleRegistrationNo,registrationDate,recordedMilage,bankName,bankAccountNumber,insuranceCompany,drivingLicenceImage,formFilledBy,employmentAddress,applicationDate,vehicleLibre,libreFrontPic,libreBackPic,engineNo,vehiclePhoto} = req.body
-            const createInsuranceLoans = await InsuranceLoan.create({userId:userOId,vehicleName,vehicleBrand,vehicleModel,color,agentPhoneNumber,agentCode,agentApp,licensePlateNo,vehicleYear,ownerId:userOId,fuelType,vehicleValue,carCondition,loanTerm,vehicleRegistrationNo,registrationDate,recordedMilage,bankName,bankAccountNumber,insuranceCompany,drivingLicenceImage,formFilledBy,employmentAddress,applicationDate,vehicleLibre,libreFrontPic,libreBackPic,engineNo,vehiclePhoto})
+            const createInsuranceLoans = await InsuranceLoan.create({userId:userOId,vehicleName,vehicleBrand,vehicleModel,color,agentPhoneNumber,agentCode,agentApp,licensePlateNo,vehicleYear,ownerId,fuelType,vehicleValue,carCondition,loanTerm,vehicleRegistrationNo,registrationDate,recordedMilage,bankName,bankAccountNumber,insuranceCompany,drivingLicenceImage,formFilledBy,employmentAddress,applicationDate,vehicleLibre,libreFrontPic,libreBackPic,engineNo,vehiclePhoto})
             if(createInsuranceLoans)
             {
                 handleSuccess(res,createInsuranceLoans,'You veichle Insurance created successfully',statusCode?.OK)

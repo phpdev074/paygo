@@ -23,7 +23,7 @@ export const createInsuranceLoan = async(req,res)=>{
 }
 export const getInsuranceLoan = async(req,res)=>{
     try {
-            const insuranceLoanList = await InsuranceLoan.find().populate("userId").sort({_id:-1})
+            const insuranceLoanList = await InsuranceLoan.find().populate("ownerId").sort({_id:-1})
             if(insuranceLoanList)
             {
                 handleSuccess(res,insuranceLoanList,"Insurance Loan List fetched successfully",statusCode?.OK) 

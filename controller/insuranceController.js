@@ -21,3 +21,18 @@ export const createInsuranceLoan = async(req,res)=>{
         handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }
+export const getInsuranceLoan = async(req,res)=>{
+    try {
+            const insuranceLoanList = await InsuranceLoan.find().populate("userId").sort({_id:-1})
+            if(insuranceLoanList)
+            {
+                handleSuccess(res,insuranceLoanList,"Insurance Loan List fetched successfully",statusCode?.OK) 
+            }
+            else
+            {
+                handleError(res,"Insurance Loan List Fail",statusCode?.BAD_REQUEST)
+            }
+    } catch (error) {
+       handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR) 
+    }
+}

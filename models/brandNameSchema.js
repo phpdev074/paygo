@@ -6,7 +6,6 @@ const brandNameSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true
   },
   timestamp: {
     type: Date,

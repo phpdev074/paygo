@@ -1,7 +1,9 @@
 import express from 'express';
-import { getBrandName,getCarNameByBrandId } from '../controller/carController.js';
+import { getBrandName,getCarNameByBrandId,addBrandName,getCarNameByBrand } from '../controller/carController.js';
 import verifyAuthToken from "../middileware/JwtVerify.js";
 const carRouter = express.Router();
-carRouter.get("/get-brand-name",verifyAuthToken,getBrandName)
-carRouter.get("/get-car-name-byBrandId",verifyAuthToken,getCarNameByBrandId)
+carRouter.post("/add-brand",addBrandName)
+carRouter.get("/get-brand-name",getBrandName)
+carRouter.get("/get-car-name-byBrandId",getCarNameByBrandId)
+carRouter.get("/get-car-name",getCarNameByBrand)
 export default carRouter;

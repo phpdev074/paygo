@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import user from "../models/users.js";
 import { handleError,handleFail,handleSuccess } from "../responseHandler/response.js";
 import statusCode from "../constants/statusCode.js";
-import InsuranceLoan from "../models/insuranceLoanSchema.js";
+import InsuranceLoan from "../models/insuranceLoanSchema.js";  
+import Loan from "../models/financialLoan.js";
 export const createInsuranceLoan = async(req,res)=>{
     try {
             const userId = req.user
@@ -36,5 +36,23 @@ export const getInsuranceLoan = async(req,res)=>{
             }
     } catch (error) {
        handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR) 
+    }
+}
+export const createLoan = async(req,res)=>{
+    try {
+            const userId = req.user
+            const userOId = new mongoose.Types.ObjectId(userId)  
+            const {loanTerms,uploadid,loanType,collateral,collateralValueApprovedBy,address,applicationDate,employementAddress,uplaodIdImage,tinRegistrationImage,businessLicenseImage,idNumber,companyName,loanTerm,loanAmount,reasonForLoan,bankName,tinNumber,accountNumber} = req.body
+            const loanCreate = await Loan.create({loanTerms,uploadid,loanType,collateral,collateralValueApprovedBy,address,applicationDate,employementAddress,uplaodIdImage,tinRegistrationImage,businessLicenseImage,idNumber,companyName,loanTerm,loanAmount,reasonForLoan,bankName,tinNumber,accountNumber,userId:userOId})
+            if(loanCreate)
+            {
+                handleSuccess(res,loanCreate,"Insurance Loan Craeted Succesfully",statusCode?.OK)
+            }
+            else
+            {
+                handleError(res,"Insurance Loan created fail",statusCode?.BAD_REQUEST)
+            }
+    } catch (error) {
+        handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)                
     }
 }

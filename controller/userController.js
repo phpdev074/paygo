@@ -229,3 +229,18 @@ export const createContactUs = async(req,res)=>{
         handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
     }
 }
+export const getContactUs = async(req,res)=>{
+    try {
+            const getListOfContactUs  = await ContactUs.find().sort({_id:-1})
+            if(getListOfContactUs)
+            {
+                handleSuccess(res,getListOfContactUs,"Contact Us list fetched successfully",statusCode?.OK)
+            }
+            else
+            {
+                handleFail(res,"Contact Us List fetched failed",statusCode?.BAD_REQUEST)
+            }       
+    } catch (error) {
+        handleError(res,error.message,statusCode?.INTERNAL_SERVER_ERROR)
+    }
+}
